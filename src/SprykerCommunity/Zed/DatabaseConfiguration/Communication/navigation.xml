@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <administration>
+        <pages>
+            <database-configuration>
+                <label>Database Configuration</label>
+                <title>Database Configuration</title>
+                <icon>fa-cubes</icon>
+                <bundle>database-configuration</bundle>
+                <controller>index</controller>
+                <action>index</action>
+            </database-configuration>
+        </pages>
+    </administration>
+</config>
