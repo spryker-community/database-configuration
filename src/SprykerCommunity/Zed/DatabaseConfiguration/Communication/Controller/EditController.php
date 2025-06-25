@@ -56,11 +56,6 @@ class EditController extends AbstractController
     protected const FIELD_NAME = 'name';
 
     /**
-     * @var string
-     */
-    protected const FIELD_VALID_TO = 'valid_to';
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<mixed>

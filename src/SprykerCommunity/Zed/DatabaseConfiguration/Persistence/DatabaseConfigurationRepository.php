@@ -2,9 +2,11 @@
 
 namespace SprykerCommunity\Zed\DatabaseConfiguration\Persistence;
 
-use Generated\Shared\Transfer\ApiKeyCollectionTransfer;
 use Generated\Shared\Transfer\DatabaseConfigurationCollectionTransfer;
+use Generated\Shared\Transfer\DatabaseConfigurationConditionsTransfer;
 use Generated\Shared\Transfer\DatabaseConfigurationCriteriaTransfer;
+use Generated\Shared\Transfer\DatabaseConfigurationTransfer;
+use Orm\Zed\DatabaseConfiguration\Persistence\Base\SpycDatabaseConfigurationQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -18,19 +20,36 @@ class DatabaseConfigurationRepository extends AbstractRepository implements Data
         $databaseConfigurationQuery = $this->getFactory()->createDatabaseConfigurationQuery();
 
         if ($databaseConfigurationCriteriaTransfer->getDatabaseConfigurationConditions() !== null) {
-            $databaseConfigurationQuery = $this->applyApiKeyConditions($apiKeyQuery, $apiKeyCriteriaTransfer->getApiKeyConditionsOrFail());
+            $databaseConfigurationQuery = $this->applyApiKeyConditions($databaseConfigurationQuery, $databaseConfigurationCriteriaTransfer->getDatabaseConfigurationConditions());
         }
 
-        $apiKeysCollection = $apiKeyQuery->find();
+        $databaseConfigurationsCollection = $databaseConfigurationQuery->find();
 
-        $apiKeyCollectionTransfer = new ApiKeyCollectionTransfer();
+        $databaseConfigurationCollectionTransfer = new DatabaseConfigurationCollectionTransfer();
 
-        if ($apiKeysCollection->getData() === []) {
-            return $apiKeyCollectionTransfer;
+        if ($databaseConfigurationsCollection->getData() === []) {
+            return $databaseConfigurationCollectionTransfer;
         }
 
-        return $this->getFactory()
-            ->createApiKeyMapper()
-            ->mapApiKeyEntityCollectionToApiKeyCollectionTransfer($apiKeysCollection, $apiKeyCollectionTransfer);
+        foreach ($databaseConfigurationsCollection as $item) {
+            $databaseConfigurationTransfer = (new DatabaseConfigurationTransfer())->fromArray($item->toArray(), true);
+
+            $databaseConfigurationCollectionTransfer->addDatabaseConfiguration($databaseConfigurationTransfer);
+        }
+
+        return $databaseConfigurationCollectionTransfer;
+    }
+
+    protected function applyApiKeyConditions(
+        SpycDatabaseConfigurationQuery $databaseConfigurationQuery,
+        DatabaseConfigurationConditionsTransfer $databaseConfigurationConditionsTransfer,
+    ): SpycDatabaseConfigurationQuery {
+        if ($databaseConfigurationConditionsTransfer->getDatabaseConfigurationIds() !== []) {
+            $databaseConfigurationQuery = $databaseConfigurationQuery->filterByIdConfiguration_In(
+                $databaseConfigurationConditionsTransfer->getDatabaseConfigurationIds(),
+            );
+        }
+
+        return $databaseConfigurationQuery;
     }
 }

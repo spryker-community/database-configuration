@@ -2,7 +2,7 @@
 
 namespace SprykerCommunity\Zed\DatabaseConfiguration\Persistence;
 
-use Orm\Zed\DatabaseConfiguration\Persistence\SpycDatabaseConfigurationQuery;
+use Orm\Zed\DatabaseConfiguration\Persistence\Base\SpycDatabaseConfigurationQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 class DatabaseConfigurationPersistenceFactory extends AbstractPersistenceFactory

@@ -13,6 +13,6 @@ class DatabaseConfigurationFacade extends AbstractFacade implements DatabaseConf
 {
     public function getDatabaseConfigurationCollection(DatabaseConfigurationCriteriaTransfer $databaseConfigurationCriteriaTransfer): DatabaseConfigurationCollectionTransfer
     {
-        return new DatabaseConfigurationCollectionTransfer();
+        return $this->getRepository()->getDatabaseConfigurationCollection($databaseConfigurationCriteriaTransfer);
     }
 }

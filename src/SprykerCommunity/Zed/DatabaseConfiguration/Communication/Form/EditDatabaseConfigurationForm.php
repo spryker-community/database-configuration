@@ -18,12 +18,12 @@ class EditDatabaseConfigurationForm extends AbstractType
     /**
      * @var string
      */
-    protected const FIELD_KEY = 'key';
+    protected const FIELD_KEY = 'configuration_key';
 
     /**
      * @var string
      */
-    protected const FIELD_VALUE = 'value';
+    protected const FIELD_VALUE = 'configuration_value';
 
     /**
      * @var string
@@ -84,7 +84,7 @@ class EditDatabaseConfigurationForm extends AbstractType
     {
         $builder->add(
             static::FIELD_VALUE,
-            CheckboxType::class,
+            TextType::class,
             [
                 'label' => static::LABEL_VALUE,
                 'required' => false,
