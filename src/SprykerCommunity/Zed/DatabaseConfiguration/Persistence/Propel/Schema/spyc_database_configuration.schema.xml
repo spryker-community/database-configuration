@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed"
+          xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\DatabaseConfiguration\Persistence"
+          package="src.Orm.Zed.DatabaseConfiguration.Persistence">
+
+    <table name="spyc_database_configuration" idMethod="native">
+        <column name="id_configuration" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="configuration_key" required="true" type="VARCHAR" size="255"/>
+        <column name="configuration_value" required="true" type="LONGVARCHAR"/>
+        <behavior name="timestampable">
+            <parameter name="is_timestamp" value="true"/>
+        </behavior>
+
+        <id-method-parameter value="spyc_database_configuration_pk_seq"/>
+
+        <unique name="spyc_database_configuration-unique-configuration_key">
+            <unique-column name="configuration_key"/>
+        </unique>
+    </table>
+</database>

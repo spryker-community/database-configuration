@@ -7,7 +7,7 @@
                 <title>Database Configuration</title>
                 <icon>fa-cubes</icon>
                 <bundle>database-configuration</bundle>
-                <controller>index</controller>
+                <controller>list</controller>
                 <action>index</action>
             </database-configuration>
         </pages>
