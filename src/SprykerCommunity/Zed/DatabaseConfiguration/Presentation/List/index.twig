@@ -1,10 +1,10 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block section_title %}{{ 'Database Configurations' | trans }}{% endblock %}
+{% block section_title %}{{ 'Database Configuration' | trans }}{% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Database Configurations' | trans } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Database Configuration' | trans } %}
 
         {% block widget_content %}
             {{ databaseConfigurationTable | raw }}
