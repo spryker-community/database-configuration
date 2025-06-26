@@ -12,6 +12,6 @@ class GatewayController extends AbstractGatewayController
 {
     public function getDatabaseConfigurationAction(DatabaseConfigurationTransfer $databaseConfigurationTransfer): DatabaseConfigurationTransfer
     {
-        return $this->getFacade()->getDatabaseConfigurationByKey($databaseConfigurationKey);
+        return $this->getFacade()->getDatabaseConfigurationByKey($databaseConfigurationTransfer);
     }
 }

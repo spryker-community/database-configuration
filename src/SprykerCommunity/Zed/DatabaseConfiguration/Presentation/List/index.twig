@@ -4,6 +4,9 @@
 
 {% block content %}
 
+    {% if promotionConfig == true %}
+        <img src="https://us.v-cdn.net/6037907/uploads/OTFYY8P9CQ8F/fullcolordarkshadow-500.png?v=66bd2572" alt="Commerce Quest logo">
+    {% endif %}
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Database Configuration' | trans } %}
 
         {% block widget_content %}
