@@ -4,6 +4,8 @@ namespace SprykerCommunity\Zed\DatabaseConfiguration\Communication\Controller;
 
 use Generated\Shared\Transfer\ApiKeyCollectionRequestTransfer;
 use Generated\Shared\Transfer\ApiKeyTransfer;
+use Generated\Shared\Transfer\DatabaseConfigurationCollectionTransfer;
+use Generated\Shared\Transfer\DatabaseConfigurationTransfer;
 use Spryker\Zed\ApiKeyGui\ApiKeyGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use SprykerCommunity\Zed\DatabaseConfiguration\DatabaseConfigurationConfig;
@@ -80,7 +82,7 @@ class EditController extends AbstractController
             ->handleRequest($request);
 
         if ($editDatabaseConfigurationForm->isSubmitted() && $editDatabaseConfigurationForm->isValid()) {
-            return $this->updateApiKey($editDatabaseConfigurationForm);
+            return $this->updateDatabaseConfiguration($editDatabaseConfigurationForm, $idDatabaseConfiguration);
         }
 
         return $this->viewResponse([
@@ -89,54 +91,40 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $editApiKeyForm
+     * @param \Symfony\Component\Form\FormInterface $editDatabaseConfigurationForm
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<mixed>
      */
-    protected function updateApiKey(FormInterface $editApiKeyForm)
+    protected function updateDatabaseConfiguration(FormInterface $editDatabaseConfigurationForm, int $idDatabaseConfiguration)
     {
-        $key = $editApiKeyForm->getData()[static::FIELD_IS_KEY_NEEDS_REGENERATION] ?
-            $this->getFactory()->createApiKeyGenerator()->generate() :
-            null;
+        $formData = $editDatabaseConfigurationForm->getData();
 
-        $apiKeyCollectionRequestTransfer = (new ApiKeyCollectionRequestTransfer())
-            ->setIsTransactional(true)
-            ->addApiKey(
-                (new ApiKeyTransfer())
-                    ->setIdApiKey($editApiKeyForm->getData()[static::ID_API_KEY])
-                    ->setName($editApiKeyForm->getData()[static::FIELD_NAME])
-                    ->setValidTo($editApiKeyForm->getData()[static::FIELD_VALID_TO])
-                    ->setKey($key),
-            );
+        $databaseConfigurationTransfer = (new DatabaseConfigurationTransfer())
+            ->setIdDatabaseConfiguration($idDatabaseConfiguration)
+            ->setConfigurationKey($formData['configuration_key'])
+            ->setConfigurationValue($formData['configuration_value']);
+        $databaseConfigurationCollectionTransfer = (new DatabaseConfigurationCollectionTransfer())
+            ->addDatabaseConfiguration($databaseConfigurationTransfer);
 
-        $apiKeyCollectionResponseTransfer = $this->getFactory()
-            ->getApiKeyFacade()
-            ->updateApiKeyCollection($apiKeyCollectionRequestTransfer);
+        $databaseConfigurationCollectionResponseTransfer = $this->getFactory()
+            ->getDatabaseConfigurationFacade()
+            ->updateDatabaseConfigurationCollection($databaseConfigurationCollectionTransfer);
 
-        if ($apiKeyCollectionResponseTransfer->getErrors()->count() === 0) {
-            $successMessage = static::MESSAGE_API_KEY_UPDATED;
+        if ($databaseConfigurationCollectionResponseTransfer->getErrors()->count() === 0) {
+            $successMessage = static::MESSAGE_DATABASE_CONFIGURATION_UPDATED;
             $successMessageParameters = [];
-
-            $apiKeyTransfer = $apiKeyCollectionResponseTransfer->getApiKeys()->offsetGet(0);
-
-            if ($apiKeyTransfer->getKey() !== null) {
-                $successMessage .= static::API_KEY_WARNING_MESSAGE;
-                $successMessageParameters = [
-                    static::MESSAGE_KEY_PLACEHOLDER => $apiKeyTransfer->getKeyOrFail(),
-                ];
-            }
 
             $this->addSuccessMessage($successMessage, $successMessageParameters);
 
-            return $this->redirectResponse(ApiKeyGuiConfig::URL_API_KEY_LIST);
+            return $this->redirectResponse(DatabaseConfigurationConfig::URL_DATABSE_CONFIGURATION_LIST);
         }
 
-        foreach ($apiKeyCollectionResponseTransfer->getErrors() as $errorTransfer) {
+        foreach ($databaseConfigurationCollectionResponseTransfer->getErrors() as $errorTransfer) {
             $this->addErrorMessage($errorTransfer->getMessageOrFail(), $errorTransfer->getParameters());
         }
 
         return $this->viewResponse([
-            static::KEY_FORM => $editApiKeyForm->createView(),
+            static::KEY_FORM => $editDatabaseConfigurationForm->createView(),
         ]);
     }
 }

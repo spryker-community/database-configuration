@@ -2,18 +2,13 @@
 
 declare(strict_types = 1);
 
-namespace SprykerCommunity\Zed\DatabaseConfiguration\Business;
+namespace SprykerCommunity\Zed\DatabaseConfiguration\Persistence;
 
 use Generated\Shared\Transfer\DatabaseConfigurationCollectionResponseTransfer;
 use Generated\Shared\Transfer\DatabaseConfigurationCollectionTransfer;
-use Generated\Shared\Transfer\DatabaseConfigurationCriteriaTransfer;
 
-interface DatabaseConfigurationFacadeInterface
+interface DatabaseConfigurationEntityManagerInterface
 {
-    public function getDatabaseConfigurationCollection(
-        DatabaseConfigurationCriteriaTransfer $databaseConfigurationCriteriaTransfer,
-    ): DatabaseConfigurationCollectionTransfer;
-
     public function updateDatabaseConfigurationCollection(
         DatabaseConfigurationCollectionTransfer $databaseConfigurationCollectionTransfer,
     ): DatabaseConfigurationCollectionResponseTransfer;

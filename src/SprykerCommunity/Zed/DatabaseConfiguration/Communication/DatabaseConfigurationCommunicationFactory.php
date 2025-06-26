@@ -4,6 +4,7 @@ namespace SprykerCommunity\Zed\DatabaseConfiguration\Communication;
 
 use Orm\Zed\DatabaseConfiguration\Persistence\SpycDatabaseConfigurationQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use SprykerCommunity\Zed\DatabaseConfiguration\Business\DatabaseConfigurationFacadeInterface;
 use SprykerCommunity\Zed\DatabaseConfiguration\Communication\Form\DataProvider\EditDatabaseConfigurationFormDataProvider;
 use SprykerCommunity\Zed\DatabaseConfiguration\Communication\Form\EditDatabaseConfigurationForm;
 use SprykerCommunity\Zed\DatabaseConfiguration\Communication\Table\DatabaseConfigurationTable;
@@ -11,7 +12,7 @@ use SprykerCommunity\Zed\DatabaseConfiguration\DatabaseConfigurationDependencyPr
 use Symfony\Component\Form\FormInterface;
 
 /**
- * @method \SprykerCommunity\Zed\DatabaseConfiguration\Business\DatabaseConfigurationFacadeInterface getFacade()
+ * @method DatabaseConfigurationFacadeInterface getFacade()
  */
 class DatabaseConfigurationCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -37,6 +38,11 @@ class DatabaseConfigurationCommunicationFactory extends AbstractCommunicationFac
     public function getDatabaseConfigurationPropelQuery(): SpycDatabaseConfigurationQuery
     {
         return $this->getProvidedDependency(DatabaseConfigurationDependencyProvider::PROPEL_QUERY_DATABASE_CONFIGURATION);
+    }
+
+    public function getDatabaseConfigurationFacade(): DatabaseConfigurationFacadeInterface
+    {
+        return $this->getFacade();
     }
 
     protected function getFormFactory()
