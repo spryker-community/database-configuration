@@ -14,19 +14,19 @@ class ListController extends AbstractController
 {
     public function indexAction(): array
     {
-        $databseConfigurationTable = $this->getFactory()->createDatabseConfigurationTable();
+        $databaseConfigurationTable = $this->getFactory()->createDatabseConfigurationTable();
 
         return $this->viewResponse([
-            'databaseConfigurationTable' => $databseConfigurationTable->render(),
+            'databaseConfigurationTable' => $databaseConfigurationTable->render(),
         ]);
     }
 
     public function tableAction(): JsonResponse
     {
-        $databseConfigurationTable = $this->getFactory()->createDatabseConfigurationTable();
+        $databaseConfigurationTable = $this->getFactory()->createDatabseConfigurationTable();
 
         return $this->jsonResponse(
-            $databseConfigurationTable->fetchData(),
+            $databaseConfigurationTable->fetchData(),
         );
     }
 }
