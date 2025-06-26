@@ -7,6 +7,7 @@ namespace SprykerCommunity\Zed\DatabaseConfiguration\Business;
 use Generated\Shared\Transfer\DatabaseConfigurationCollectionResponseTransfer;
 use Generated\Shared\Transfer\DatabaseConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\DatabaseConfigurationCriteriaTransfer;
+use Generated\Shared\Transfer\DatabaseConfigurationTransfer;
 
 interface DatabaseConfigurationFacadeInterface
 {
@@ -17,4 +18,6 @@ interface DatabaseConfigurationFacadeInterface
     public function updateDatabaseConfigurationCollection(
         DatabaseConfigurationCollectionTransfer $databaseConfigurationCollectionTransfer,
     ): DatabaseConfigurationCollectionResponseTransfer;
+
+    public function getDatabaseConfigurationByKey(DatabaseConfigurationTransfer $databaseConfigurationTransfer): DatabaseConfigurationTransfer;
 }

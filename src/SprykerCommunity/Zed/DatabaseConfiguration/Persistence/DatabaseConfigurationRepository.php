@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * This file is part of the Spryker Commerce OS.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
+declare(strict_types = 1);
+
 namespace SprykerCommunity\Zed\DatabaseConfiguration\Persistence;
 
 use Generated\Shared\Transfer\DatabaseConfigurationCollectionTransfer;
@@ -38,6 +45,18 @@ class DatabaseConfigurationRepository extends AbstractRepository implements Data
         }
 
         return $databaseConfigurationCollectionTransfer;
+    }
+
+    public function getDatabaseConfigurationByKey(DatabaseConfigurationTransfer $databaseConfigurationTransfer): DatabaseConfigurationTransfer
+    {
+        $databaseConfigurationQuery = $this->getFactory()->createDatabaseConfigurationQuery();
+        $databaseConfigurationEntity = $databaseConfigurationQuery->findOneByConfigurationKey($databaseConfigurationTransfer->getConfigurationKey());
+
+        if ($databaseConfigurationEntity) {
+            $databaseConfigurationTransfer->fromArray($databaseConfigurationEntity->toArray(), true);
+        }
+
+        return $databaseConfigurationTransfer;
     }
 
     protected function applyApiKeyConditions(

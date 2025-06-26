@@ -12,7 +12,7 @@ namespace SprykerCommunity\Zed\DatabaseConfiguration\Business;
 use Generated\Shared\Transfer\DatabaseConfigurationCollectionResponseTransfer;
 use Generated\Shared\Transfer\DatabaseConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\DatabaseConfigurationCriteriaTransfer;
-use phpDocumentor\Reflection\Types\This;
+use Generated\Shared\Transfer\DatabaseConfigurationTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -25,6 +25,11 @@ class DatabaseConfigurationFacade extends AbstractFacade implements DatabaseConf
         DatabaseConfigurationCriteriaTransfer $databaseConfigurationCriteriaTransfer,
     ): DatabaseConfigurationCollectionTransfer {
         return $this->getRepository()->getDatabaseConfigurationCollection($databaseConfigurationCriteriaTransfer);
+    }
+
+    public function getDatabaseConfigurationByKey(DatabaseConfigurationTransfer $databaseConfigurationTransfer): DatabaseConfigurationTransfer
+    {
+        return $this->getRepository()->getDatabaseConfigurationByKey($databaseConfigurationTransfer);
     }
 
     public function updateDatabaseConfigurationCollection(

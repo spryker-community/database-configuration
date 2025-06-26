@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * This file is part of the Spryker Commerce OS.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
+declare(strict_types = 1);
+
 namespace SprykerCommunity\Zed\DatabaseConfiguration\Communication;
 
 use Orm\Zed\DatabaseConfiguration\Persistence\SpycDatabaseConfigurationQuery;
@@ -12,7 +19,7 @@ use SprykerCommunity\Zed\DatabaseConfiguration\DatabaseConfigurationDependencyPr
 use Symfony\Component\Form\FormInterface;
 
 /**
- * @method DatabaseConfigurationFacadeInterface getFacade()
+ * @method \SprykerCommunity\Zed\DatabaseConfiguration\Business\DatabaseConfigurationFacadeInterface getFacade()
  */
 class DatabaseConfigurationCommunicationFactory extends AbstractCommunicationFactory
 {
